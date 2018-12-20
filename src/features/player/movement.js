@@ -7,6 +7,7 @@ export default function handMovement(player) {
     const oldPos = store.getState().player.position
 
     switch(direction) {
+      default:
       case 'WEST':
         return [ oldPos[0] - SPRITE_SIZE, oldPos[1] ]
       case 'EAST':
