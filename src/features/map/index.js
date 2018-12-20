@@ -22,9 +22,7 @@ function MapTile(props) {
         height: SPRITE_SIZE,
         width: SPRITE_SIZE,
       }}
-    >
-      { props.tile }
-    </div>
+    >&nbsp;</div>
 }
 
 function MapRow(props) {
