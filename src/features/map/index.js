@@ -1,5 +1,6 @@
 import React from 'react'
 import { SPRITE_SIZE } from '../../config/constants'
+import { connect } from 'react-redux'
 
 import './styles.css'
 
@@ -38,7 +39,7 @@ function Map(props) {
         top: '0',
         width: '800px',
         height: '400px',
-        border: '1px solid red',
+        // border: '1px solid red',
         margin: '10px auto',
       }}
     >
@@ -49,4 +50,10 @@ function Map(props) {
   )
 }
 
-export default Map
+function mapToStateToProps(state) {
+  return {
+    tiles: state.map.tiles,
+  }
+}
+
+export default connect(mapToStateToProps)(Map)
