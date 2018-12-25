@@ -82,10 +82,9 @@ export default function handMovement(player) {
         return attemptMove('NORTH');
       case 39:
         return attemptMove('EAST');
+      default:
       case 40:
         return attemptMove('SOUTH');
-      default:
-        console.log(eve.keyCode);
     }
   }
 
