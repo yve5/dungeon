@@ -1,14 +1,14 @@
 {
-  "main.css": "/dungeon/static/css/main.1edcfc7e.chunk.css",
-  "main.js": "/dungeon/static/js/main.67a8ceb0.chunk.js",
-  "main.js.map": "/dungeon/static/js/main.67a8ceb0.chunk.js.map",
-  "static/js/1.edbed080.chunk.js": "/dungeon/static/js/1.edbed080.chunk.js",
-  "static/js/1.edbed080.chunk.js.map": "/dungeon/static/js/1.edbed080.chunk.js.map",
+  "main.css": "/dungeon/static/css/main.82951ddf.chunk.css",
+  "main.js": "/dungeon/static/js/main.6030a620.chunk.js",
+  "main.js.map": "/dungeon/static/js/main.6030a620.chunk.js.map",
+  "static/js/1.93c07e97.chunk.js": "/dungeon/static/js/1.93c07e97.chunk.js",
+  "static/js/1.93c07e97.chunk.js.map": "/dungeon/static/js/1.93c07e97.chunk.js.map",
   "runtime~main.js": "/dungeon/static/js/runtime~main.c4b60416.js",
   "runtime~main.js.map": "/dungeon/static/js/runtime~main.c4b60416.js.map",
   "static/media/player_walk.png": "/dungeon/static/media/player_walk.9f19440f.png",
-  "static/css/main.1edcfc7e.chunk.css.map": "/dungeon/static/css/main.1edcfc7e.chunk.css.map",
+  "static/css/main.82951ddf.chunk.css.map": "/dungeon/static/css/main.82951ddf.chunk.css.map",
   "index.html": "/dungeon/index.html",
-  "precache-manifest.97fc76fd510755840bb40fa7e0f21e14.js": "/dungeon/precache-manifest.97fc76fd510755840bb40fa7e0f21e14.js",
+  "precache-manifest.8fa4090b62547c3d8bf8395dd29a8f19.js": "/dungeon/precache-manifest.8fa4090b62547c3d8bf8395dd29a8f19.js",
   "service-worker.js": "/dungeon/service-worker.js"
 }

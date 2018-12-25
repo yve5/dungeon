@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/dungeon/precache-manifest.97fc76fd510755840bb40fa7e0f21e14.js"
+  "/dungeon/precache-manifest.8fa4090b62547c3d8bf8395dd29a8f19.js"
 );
 
 workbox.clientsClaim();
