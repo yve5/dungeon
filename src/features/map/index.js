@@ -1,28 +1,31 @@
 import React from 'react'
 import { SPRITE_SIZE } from '../../config/constants'
 import { connect } from 'react-redux'
-
 import './styles.css'
 
+import chestImage from './chest.png'
+import rockImage from './rock.png'
+import treeImage from './tree.png'
+
 function getTileSprite(type) {
-  switch(type) {
-    default:
-    case 0:
-      return 'grass'
-    case 3:
-    case 6:
-      return 'tree'
-    case 4:
-      return 'chest'
-    case 5:
-      return 'rock'
+  let output;
+
+  if (type === 3 || type === 6) {
+    output = treeImage
+  } else if (type === 4) {
+    output = chestImage
+  } else if (type === 5) {
+    output = rockImage
   }
+
+  return output;
 }
 
 function MapTile(props) {
   return <div 
-      className={`tile ${getTileSprite(props.tile)}`}
+      className={`tile`}
       style={{
+        backgroundImage: `url('${getTileSprite(props.tile)}')`,
         height: SPRITE_SIZE,
         width: SPRITE_SIZE,
       }}
