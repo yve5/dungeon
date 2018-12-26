@@ -4,31 +4,35 @@ import { SPRITE_SIZE, MAP_WIDTH, MAP_HEIGHT } from '../../config/constants'
 export default function handMovement(player) {
 
   function getNewPosition(oldPos, direction) {
-    switch(direction) {
-      default:
-      case 'WEST':
-        return [ oldPos[0] - SPRITE_SIZE, oldPos[1] ]
-      case 'EAST':
-        return [ oldPos[0] + SPRITE_SIZE, oldPos[1] ]
-      case 'NORTH':
-        return [ oldPos[0], oldPos[1] - SPRITE_SIZE ]
-      case 'SOUTH':
-        return [ oldPos[0], oldPos[1] + SPRITE_SIZE ]
+    let output
+
+    if (direction === 'WEST') {
+      output = [ oldPos[0] - SPRITE_SIZE, oldPos[1] ]
+    } else if (direction === 'EAST') {
+      output = [ oldPos[0] + SPRITE_SIZE, oldPos[1] ]
+    } else if (direction === 'NORTH') {
+      output = [ oldPos[0], oldPos[1] - SPRITE_SIZE ]
+    } else if (direction === 'SOUTH') {
+      output = [ oldPos[0], oldPos[1] + SPRITE_SIZE ]
     }
+
+    return output
   }
 
   function getSpriteLocation(direction, walkIndex) {
-    switch(direction) {
-      default:
-      case 'SOUTH':
-        return `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*0}px`;
-      case 'EAST':
-        return `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*1}px`;
-      case 'WEST':
-        return `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*2}px`;
-      case 'NORTH':
-        return `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*3}px`;
+    let output
+
+    if (direction === 'SOUTH') {
+      output = `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*0}px`
+    } else if (direction === 'EAST') {
+      output = `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*1}px`
+    } else if (direction === 'WEST') {
+      output = `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*2}px`
+    } else if (direction === 'NORTH') {
+      output = `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*3}px`
     }
+
+    return output
   }
 
   function getWalkIndex() {
@@ -74,18 +78,19 @@ export default function handMovement(player) {
 
   function handleKeyDown(eve) {
     eve.preventDefault()
+    let output;
 
-    switch(eve.keyCode) {
-      case 37:
-        return attemptMove('WEST');
-      case 38:
-        return attemptMove('NORTH');
-      case 39:
-        return attemptMove('EAST');
-      default:
-      case 40:
-        return attemptMove('SOUTH');
+    if (eve.keyCode === 37) {
+      output = attemptMove('WEST')
+    } else if (eve.keyCode === 38) {
+      output = attemptMove('NORTH')
+    } else if (eve.keyCode === 39) {
+      output = attemptMove('EAST')
+    } else if (eve.keyCode === 40) {
+      output = attemptMove('SOUTH')
     }
+
+    return output
   }
 
   window.addEventListener('keydown', (eve) => {

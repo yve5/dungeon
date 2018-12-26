@@ -1,11 +1,14 @@
-import React from 'react'
+// import React from 'react'
+import React, { Component } from 'react';
 import { SPRITE_SIZE } from '../../config/constants'
 import { connect } from 'react-redux'
-import './styles.css'
+import './styles.scss'
 
 import chestImage from './chest.png'
 import rockImage from './rock.png'
 import treeImage from './tree.png'
+
+// class aze extends Component {}
 
 function getTileSprite(type) {
   let output;
