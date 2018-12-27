@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import walkSprite from './player_walk.png'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import walkSprite from './player_walk.png';
 
-import handleMovement from './movement'
+import handleMovement from './movement';
 
 class Player extends Component {
   render() {
@@ -20,10 +20,10 @@ class Player extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   return {
     ...state.player,
   }
 }
 
-export default connect(mapStateToProps)(handleMovement(Player))
+export default connect(mapStateToProps)(handleMovement(Player));

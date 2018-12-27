@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import { SPRITE_SIZE } from '../../config/constants'
-import { connect } from 'react-redux'
-import './styles.scss'
+import { SPRITE_SIZE } from '../../config/constants';
+import { connect } from 'react-redux';
+import './styles.scss';
 
-import chestImage from './chest.png'
-import rockImage from './rock.png'
-import treeImage from './tree.png'
+import chestImage from './chest.png';
+import rockImage from './rock.png';
+import treeImage from './tree.png';
 
 function getTileSprite(type) {
   let output;
 
   if (type === 3 || type === 6) {
-    output = treeImage
+    output = treeImage;
   } else if (type === 4) {
-    output = chestImage
+    output = chestImage;
   } else if (type === 5) {
-    output = rockImage
+    output = rockImage;
   }
 
   return output;
@@ -37,7 +37,7 @@ class MapTile extends Component {
 }
 
 function MapRow(props) {
-  return props.tiles.map( tile => <MapTile tile={tile} /> )
+  return props.tiles.map( tile => <MapTile tile={tile} /> );
 }
 
 class Map extends Component {
@@ -54,18 +54,16 @@ class Map extends Component {
           margin: '10px auto',
         }}
       >
-        {
-          this.props.tiles.map( row => <MapRow tiles={row} /> )
-        }
+        { this.props.tiles.map( row => <MapRow tiles={row} /> ) }
       </div>
     );
   }
 }
 
-function mapToStateToProps(state) {
+const mapToStateToProps = (state) => {
   return {
     tiles: state.map.tiles,
   }
 }
 
-export default connect(mapToStateToProps)(Map)
+export default connect(mapToStateToProps)(Map);

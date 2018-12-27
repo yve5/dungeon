@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import Map from '../map'
-import Player from '../player'
+import React, { Component } from 'react';
+import Map from '../map';
+import Player from '../player';
 
-import { tiles } from '../../data/maps/1'
-import store from '../../config/store'
+import { tiles } from '../../data/maps/1';
+import store from '../../config/store';
 
 class World extends Component {
   constructor(props) {
@@ -31,4 +31,4 @@ class World extends Component {
   }
 }
 
-export default World
+export default World;
