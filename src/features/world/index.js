@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Map from '../map'
 import Player from '../player'
 
 import { tiles } from '../../data/maps/1'
 import store from '../../config/store'
 
-function World(props) {
-  store.dispatch({ type: 'ADD_TILES', payload: {
-    tiles,
-  } })
-  return (
+class World extends Component {
+  constructor(props) {
+    super(props);
+    
+    store.dispatch({ type: 'ADD_TILES', payload: {
+      tiles,
+    } });
+  }
+  
+  render() {
+    return (
       <div 
         style={{
           position: 'relative',
@@ -22,6 +28,7 @@ function World(props) {
         <Player />
       </div>
     );
+  }
 }
 
 export default World

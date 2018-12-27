@@ -1,4 +1,3 @@
-// import React from 'react'
 import React, { Component } from 'react';
 import { SPRITE_SIZE } from '../../config/constants'
 import { connect } from 'react-redux'
@@ -7,8 +6,6 @@ import './styles.scss'
 import chestImage from './chest.png'
 import rockImage from './rock.png'
 import treeImage from './tree.png'
-
-// class aze extends Component {}
 
 function getTileSprite(type) {
   let output;
@@ -24,39 +21,45 @@ function getTileSprite(type) {
   return output;
 }
 
-function MapTile(props) {
-  return <div 
-      className={`tile`}
-      style={{
-        backgroundImage: `url('${getTileSprite(props.tile)}')`,
-        height: SPRITE_SIZE,
-        width: SPRITE_SIZE,
-      }}
-    >&nbsp;</div>
+class MapTile extends Component {
+  render() {
+    return (
+      <div 
+        className={`tile`}
+        style={{
+          backgroundImage: `url('${getTileSprite(this.props.tile)}')`,
+          height: SPRITE_SIZE,
+          width: SPRITE_SIZE,
+        }}
+      >&nbsp;</div>
+    );
+  }
 }
 
 function MapRow(props) {
   return props.tiles.map( tile => <MapTile tile={tile} /> )
 }
 
-function Map(props) {
-  return (
-    <div 
-      style={{
-        position: 'relative',
-        left: '0',
-        top: '0',
-        width: '800px',
-        height: '480px',
-        border: '5px solid white',
-        margin: '10px auto',
-      }}
-    >
-      {
-        props.tiles.map( row => <MapRow tiles={row} /> )
-      }
-    </div>
-  )
+class Map extends Component {
+  render() {
+    return (
+      <div 
+        style={{
+          position: 'relative',
+          left: '0',
+          top: '0',
+          width: '800px',
+          height: '480px',
+          border: '5px solid white',
+          margin: '10px auto',
+        }}
+      >
+        {
+          this.props.tiles.map( row => <MapRow tiles={row} /> )
+        }
+      </div>
+    );
+  }
 }
 
 function mapToStateToProps(state) {
