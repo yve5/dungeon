@@ -3,13 +3,15 @@ const initialState = {
 }
 
 const playerReducer = (state=initialState, action) => {
-  if (action.type === 'ADD_TILES') {
-    return {
-      ...action.payload
-    }
+  switch (action.type) {
+    case 'ADD_TILES':
+      return {
+        ...action.payload
+      }
+      
+    default:
+      return state;
   }
-  
-  return state;
 }
 
 export default playerReducer;
