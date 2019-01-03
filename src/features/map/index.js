@@ -3,9 +3,9 @@ import { SPRITE_SIZE } from '../../config/constants';
 import { connect } from 'react-redux';
 import './styles.scss';
 
-import chestImage from './chest.png';
-import rockImage from './rock.png';
-import treeImage from './tree.png';
+import chestImage from './assets/chest.png';
+import rockImage from './assets/rock.png';
+import treeImage from './assets/tree.png';
 
 function getTileSprite(type) {
   let output;
@@ -24,7 +24,7 @@ function getTileSprite(type) {
 class MapTile extends Component {
   render() {
     return (
-      <div 
+      <div
         className={`tile`}
         style={{
           backgroundImage: `url('${getTileSprite(this.props.tile)}')`,
@@ -37,13 +37,13 @@ class MapTile extends Component {
 }
 
 function MapRow(props) {
-  return props.tiles.map( tile => <MapTile tile={tile} /> );
+  return props.tiles.map(tile => <MapTile tile={tile} />);
 }
 
 class Map extends Component {
   render() {
     return (
-      <div 
+      <div
         style={{
           position: 'relative',
           left: '0',
@@ -54,7 +54,7 @@ class Map extends Component {
           margin: '10px auto',
         }}
       >
-        { this.props.tiles.map( row => <MapRow tiles={row} /> ) }
+        {this.props.tiles.map(row => <MapRow tiles={row} />)}
       </div>
     );
   }

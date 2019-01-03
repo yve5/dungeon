@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import walkSprite from './player_walk.png';
+import walkSprite from './assets/player_walk.png';
 
 import handleMovement from './movement';
 

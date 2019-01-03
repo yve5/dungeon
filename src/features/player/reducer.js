@@ -5,13 +5,16 @@ const initialState = {
   direction: 'EAST',
 }
 
-const playerReducer = (state=initialState, action) => {
-  if (action.type === 'MOVE_PLAYER') {
-    return {
-      ...action.payload
-    }
+const playerReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'MOVE_PLAYER':
+      return {
+        ...action.payload
+      }
+      
+    default:
+      return state;
   }
-  return state;
 }
 
 export default playerReducer

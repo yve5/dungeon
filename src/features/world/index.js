@@ -8,15 +8,18 @@ import store from '../../config/store';
 class World extends Component {
   constructor(props) {
     super(props);
-    
-    store.dispatch({ type: 'ADD_TILES', payload: {
-      tiles,
-    } });
+
+    store.dispatch({
+      type: 'ADD_TILES',
+      payload: {
+        tiles,
+      }
+    });
   }
-  
+
   render() {
     return (
-      <div 
+      <div
         style={{
           position: 'relative',
           width: '800px',

@@ -7,13 +7,13 @@ export default function handMovement(player) {
     let output;
 
     if (direction === 'WEST') {
-      output = [ oldPos[0] - SPRITE_SIZE, oldPos[1] ];
+      output = [oldPos[0] - SPRITE_SIZE, oldPos[1]];
     } else if (direction === 'EAST') {
-      output = [ oldPos[0] + SPRITE_SIZE, oldPos[1] ];
+      output = [oldPos[0] + SPRITE_SIZE, oldPos[1]];
     } else if (direction === 'NORTH') {
-      output = [ oldPos[0], oldPos[1] - SPRITE_SIZE ];
+      output = [oldPos[0], oldPos[1] - SPRITE_SIZE];
     } else if (direction === 'SOUTH') {
-      output = [ oldPos[0], oldPos[1] + SPRITE_SIZE ];
+      output = [oldPos[0], oldPos[1] + SPRITE_SIZE];
     }
 
     return output;
@@ -23,13 +23,13 @@ export default function handMovement(player) {
     let output;
 
     if (direction === 'SOUTH') {
-      output = `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*0}px`;
+      output = `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 0}px`;
     } else if (direction === 'EAST') {
-      output = `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*1}px`;
+      output = `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 1}px`;
     } else if (direction === 'WEST') {
-      output = `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*2}px`;
+      output = `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 2}px`;
     } else if (direction === 'NORTH') {
-      output = `${SPRITE_SIZE*walkIndex}px ${SPRITE_SIZE*3}px`;
+      output = `${SPRITE_SIZE * walkIndex}px ${SPRITE_SIZE * 3}px`;
     }
 
     return output;
@@ -39,10 +39,10 @@ export default function handMovement(player) {
     const walkIndex = store.getState().player.walkIndex;
     return walkIndex >= 7 ? 0 : walkIndex + 1;
   }
-  
-  function observeBoundaries(oldPos, newPos) {
-    return (newPos[0] >= 0 && newPos[0] <= (MAP_WIDTH - SPRITE_SIZE)) && 
-           (newPos[1] >= 0 && newPos[1] <= (MAP_HEIGHT - SPRITE_SIZE));
+
+  function observeBoundaries(newPos) {
+    return (newPos[0] >= 0 && newPos[0] <= (MAP_WIDTH - SPRITE_SIZE)) &&
+      (newPos[1] >= 0 && newPos[1] <= (MAP_HEIGHT - SPRITE_SIZE));
   }
 
   function observeImpassable(oldPos, newPos) {
@@ -55,7 +55,7 @@ export default function handMovement(player) {
 
   function dispatchMove(direction, newPos) {
     const walkIndex = getWalkIndex();
-    
+
     store.dispatch({
       type: 'MOVE_PLAYER',
       payload: {
@@ -71,7 +71,7 @@ export default function handMovement(player) {
     const oldPos = store.getState().player.position;
     const newPos = getNewPosition(oldPos, direction);
 
-    if (observeBoundaries(oldPos, newPos) && observeImpassable(oldPos, newPos)) {
+    if (observeBoundaries(newPos) && observeImpassable(oldPos, newPos)) {
       dispatchMove(direction, newPos);
     }
   }
