@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import World from './features/world'
-import Canvarea from './features/canvarea';
+import React, { Component } from 'react';
+// import World from './features/world';
+import Lightness from './features/lightness';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Canvarea />
-        <World />
+        <Lightness />
+        {/* <World /> */}
       </div>
     );
   }
