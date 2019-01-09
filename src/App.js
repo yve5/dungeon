@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-// import World from './features/world';
-import Lightness from './features/lightness';
+import Graphic from './features/graphic';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Lightness />
-        {/* <World /> */}
+        <Graphic />
       </div>
     );
   }
