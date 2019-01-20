@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Graphic from './features/graphic';
+import Graphic from './Features/Graphic/Graphic';
 
 class App extends Component {
   render() {
