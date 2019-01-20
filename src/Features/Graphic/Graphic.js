@@ -11,22 +11,71 @@ class Graphic extends Component {
     this.height = 500;
     this.width = 500;
 
-    this.setViewport(this.width, this.height);
-    this.loadMap(map);
-    // game.load_map(map);
-    // game.limit_viewport = true;
+
+    this.alert_errors = false;
+    this.log_info = true;
+    this.tile_size = 16;
+    this.limitViewport = false;
+    this.jump_switch = 0;
+
+    this.viewport = {
+      x: 200,
+      y: 200
+    };
+
+    this.camera = {
+      x: 0,
+      y: 0
+    };
+
+    this.key = {
+      left: false,
+      right: false,
+      up: false
+    };
+
+    this.player = {
+      loc: {
+        x: 0,
+        y: 0
+      },
+      vel: {
+        x: 0,
+        y: 0
+      },
+      can_jump: true
+    };
+
 
     this.loop = this.loop.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+
+
+    this.setViewport(this.width, this.height);
+    this.loadMap(map);
+    // this.limitViewport = true;
   }
 
   componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('keyup', this.handleKeyUp);
     window.requestAnimationFrame(this.loop);
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleKeyDown);
+    window.removeEventListener('keyup', this.handleKeyUp);
+  }
+
+  handleKeyDown() {
+    console.log('hello', 'down');
+  }
+
+  handleKeyUp() {
+    console.log('hello', 'up');
   }
 
   loop() {
-    // const rotation = this.state.rotation + 0.04;
-    // this.setState({ rotation });
-
     this.paint();
 
     window.requestAnimationFrame(this.loop);
@@ -43,9 +92,38 @@ class Graphic extends Component {
     // game.draw(ctx);
   }
 
+  update() {
+    this.updatePlayer();
+  }
+
+  updatePlayer() {
+    if (this.key.left) {
+      if (this.player.vel.x > -this.currentMap.velLimit.x) {
+        this.player.vel.x -= this.currentMap.movementSpeed.left;
+      }
+    }
+
+    // if (this.key.up) {
+
+    //   if (this.player.can_jump && this.player.vel.y > -this.current_map.vel_limit.y) {
+
+    //     this.player.vel.y -= this.current_map.movement_speed.jump;
+    //     this.player.can_jump = false;
+    //   }
+    // }
+
+    // if (this.key.right) {
+
+    //   if (this.player.vel.x < this.current_map.vel_limit.x)
+    //     this.player.vel.x += this.current_map.movement_speed.left;
+    // }
+
+    // this.move_player();
+  }
+
   setViewport(x, y) {
-    // this.viewport.x = x;
-    // this.viewport.y = y;
+    this.viewport.x = x;
+    this.viewport.y = y;
   }
 
   loadMap(map) {
@@ -83,19 +161,19 @@ class Graphic extends Component {
     this.currentMap.widthP = this.currentMap.width * this.tileSize;
     this.currentMap.heightP = this.currentMap.height * this.tileSize;
 
-    // this.player.loc.x = map.player.x * this.tileSize || 0;
-    // this.player.loc.y = map.player.y * this.tileSize || 0;
-    // this.player.colour = map.player.colour || '#000';
+    this.player.loc.x = map.player.x * this.tileSize || 0;
+    this.player.loc.y = map.player.y * this.tileSize || 0;
+    this.player.colour = map.player.colour || '#000';
 
-    // this.camera = {
-    //   x: 0,
-    //   y: 0
-    // };
+    this.camera = {
+      x: 0,
+      y: 0
+    };
 
-    // this.player.vel = {
-    //   x: 0,
-    //   y: 0
-    // };
+    this.player.vel = {
+      x: 0,
+      y: 0
+    };
 
     // this.log('Successfully loaded map data.');
 
