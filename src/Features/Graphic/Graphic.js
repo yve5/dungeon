@@ -55,6 +55,11 @@ class Graphic extends Component {
     this.setViewport = this.setViewport.bind(this);
     this.loadMap = this.loadMap.bind(this);
     this.movePlayer = this.movePlayer.bind(this);
+    this.getTile = this.getTile.bind(this);
+    this.drawTile = this.drawTile.bind(this);
+    this.drawMap = this.drawMap.bind(this);
+    this.drawPlayer = this.drawPlayer.bind(this);
+    this.draw = this.draw.bind(this);
 
 
     this.setViewport(this.width, this.height);
@@ -118,7 +123,7 @@ class Graphic extends Component {
     ctx.fillRect(0, 0, this.width, this.height);
 
     this.update();
-    // game.draw(ctx);
+    this.draw(ctx)
   }
 
   update() {
@@ -128,213 +133,221 @@ class Graphic extends Component {
   updatePlayer() {
     if (this.key.left) {
       console.info('left');
-      // if (this.player.vel.x > -this.currentMap.velLimit.x) {
-      //   this.player.vel.x -= this.currentMap.movementSpeed.left;
-      // }
+
+      if (this.player.vel.x > -this.currentMap.velLimit.x) {
+        this.player.vel.x -= this.currentMap.movementSpeed.left;
+      }
     }
 
     if (this.key.up) {
       console.info('up');
-      // if (this.player.canJump && this.player.vel.y > -this.currentMap.velLimit.y) {
-      //   this.player.vel.y -= this.currentMap.movementSpeed.jump;
-      //   this.player.canJump = false;
-      // }
+
+      if (this.player.canJump && this.player.vel.y > -this.currentMap.velLimit.y) {
+        this.player.vel.y -= this.currentMap.movementSpeed.jump;
+        this.player.canJump = false;
+      }
     }
 
     if (this.key.right) {
       console.info('right');
-      // if (this.player.vel.x < this.currentMap.velLimit.x) {
-      //   this.player.vel.x += this.currentMap.movementSpeed.left;
-      // }
+
+      if (this.player.vel.x < this.currentMap.velLimit.x) {
+        this.player.vel.x += this.currentMap.movementSpeed.left;
+      }
     }
 
     this.movePlayer();
   }
 
-  movePlayer() {
+  getTile(x, y) {
+    return (this.currentMap.data[y] && this.currentMap.data[y][x]) ? this.currentMap.data[y][x] : 0;
+  };
 
+  movePlayer() {
     let tX = this.player.loc.x + this.player.vel.x;
     let tY = this.player.loc.y + this.player.vel.y;
 
     let offset = Math.round((this.tileSize / 2) - 1);
 
-    // var tile = this.get_tile(
-    //   Math.round(this.player.loc.x / this.tile_size),
-    //   Math.round(this.player.loc.y / this.tile_size)
-    // );
+    let tile = this.getTile(
+      Math.round(this.player.loc.x / this.tileSize),
+      Math.round(this.player.loc.y / this.tileSize)
+    );
 
-    // if (tile.gravity) {
+    if (tile.gravity) {
+      this.player.vel.x += tile.gravity.x;
+      this.player.vel.y += tile.gravity.y;
+    }
+    else {
+      this.player.vel.x += this.currentMap.gravity.x;
+      this.player.vel.y += this.currentMap.gravity.y;
+    }
 
-    //   this.player.vel.x += tile.gravity.x;
-    //   this.player.vel.y += tile.gravity.y;
-
-    // } else {
-
-    //   this.player.vel.x += this.current_map.gravity.x;
-    //   this.player.vel.y += this.current_map.gravity.y;
-    // }
-
-    // if (tile.friction) {
-
-    //   this.player.vel.x *= tile.friction.x;
-    //   this.player.vel.y *= tile.friction.y;
-    // }
-
-    // var t_y_up = Math.floor(tY / this.tile_size);
-    // var t_y_down = Math.ceil(tY / this.tile_size);
-    // var y_near1 = Math.round((this.player.loc.y - offset) / this.tile_size);
-    // var y_near2 = Math.round((this.player.loc.y + offset) / this.tile_size);
-
-    // var t_x_left = Math.floor(tX / this.tile_size);
-    // var t_x_right = Math.ceil(tX / this.tile_size);
-    // var x_near1 = Math.round((this.player.loc.x - offset) / this.tile_size);
-    // var x_near2 = Math.round((this.player.loc.x + offset) / this.tile_size);
-
-    // var top1 = this.get_tile(x_near1, t_y_up);
-    // var top2 = this.get_tile(x_near2, t_y_up);
-    // var bottom1 = this.get_tile(x_near1, t_y_down);
-    // var bottom2 = this.get_tile(x_near2, t_y_down);
-    // var left1 = this.get_tile(t_x_left, y_near1);
-    // var left2 = this.get_tile(t_x_left, y_near2);
-    // var right1 = this.get_tile(t_x_right, y_near1);
-    // var right2 = this.get_tile(t_x_right, y_near2);
+    if (tile.friction) {
+      this.player.vel.x *= tile.friction.x;
+      this.player.vel.y *= tile.friction.y;
+    }
 
 
-    // if (tile.jump && this.jump_switch > 15) {
+    let t_y_up = Math.floor(tY / this.tileSize);
+    let t_y_down = Math.ceil(tY / this.tileSize);
+    let y_near1 = Math.round((this.player.loc.y - offset) / this.tileSize);
+    let y_near2 = Math.round((this.player.loc.y + offset) / this.tileSize);
 
-    //   this.player.can_jump = true;
+    let t_x_left = Math.floor(tX / this.tileSize);
+    let t_x_right = Math.ceil(tX / this.tileSize);
+    let x_near1 = Math.round((this.player.loc.x - offset) / this.tileSize);
+    let x_near2 = Math.round((this.player.loc.x + offset) / this.tileSize);
 
-    //   this.jump_switch = 0;
+    let top1 = this.getTile(x_near1, t_y_up);
+    let top2 = this.getTile(x_near2, t_y_up);
+    let bottom1 = this.getTile(x_near1, t_y_down);
+    let bottom2 = this.getTile(x_near2, t_y_down);
+    let left1 = this.getTile(t_x_left, y_near1);
+    let left2 = this.getTile(t_x_left, y_near2);
+    let right1 = this.getTile(t_x_right, y_near1);
+    let right2 = this.getTile(t_x_right, y_near2);
 
-    // } else this.jump_switch++;
 
-    // this.player.vel.x = Math.min(Math.max(this.player.vel.x, -this.current_map.vel_limit.x), this.current_map.vel_limit.x);
-    // this.player.vel.y = Math.min(Math.max(this.player.vel.y, -this.current_map.vel_limit.y), this.current_map.vel_limit.y);
+    if (tile.jump && this.jump_switch > 15) {
+      this.player.canJump = true;
+      this.jumpsSwitch = 0;
+    }
+    else {
+      this.jumpsSwitch++;
+    }
 
-    // this.player.loc.x += this.player.vel.x;
-    // this.player.loc.y += this.player.vel.y;
+    this.player.vel.x = Math.min(Math.max(this.player.vel.x, -this.currentMap.velLimit.x), this.currentMap.velLimit.x);
+    this.player.vel.y = Math.min(Math.max(this.player.vel.y, -this.currentMap.velLimit.y), this.currentMap.velLimit.y);
 
-    // this.player.vel.x *= .9;
+    this.player.loc.x += this.player.vel.x;
+    this.player.loc.y += this.player.vel.y;
 
-    // if (left1.solid || left2.solid || right1.solid || right2.solid) {
+    this.player.vel.x *= .9;
 
-    //   /* fix overlap */
 
-    //   while (this.get_tile(Math.floor(this.player.loc.x / this.tile_size), y_near1).solid
-    //     || this.get_tile(Math.floor(this.player.loc.x / this.tile_size), y_near2).solid)
-    //     this.player.loc.x += 0.1;
+    if (left1.solid || left2.solid || right1.solid || right2.solid) {
+      // fix overlap
+      while (this.getTile(Math.floor(this.player.loc.x / this.tileSize), y_near1).solid || this.getTile(Math.floor(this.player.loc.x / this.tileSize), y_near2).solid) {
+        this.player.loc.x += 0.1;
+      }
 
-    //   while (this.get_tile(Math.ceil(this.player.loc.x / this.tile_size), y_near1).solid
-    //     || this.get_tile(Math.ceil(this.player.loc.x / this.tile_size), y_near2).solid)
-    //     this.player.loc.x -= 0.1;
+      while (this.getTile(Math.ceil(this.player.loc.x / this.tileSize), y_near1).solid || this.getTile(Math.ceil(this.player.loc.x / this.tileSize), y_near2).solid) {
+        this.player.loc.x -= 0.1;
+      }
 
-    //   /* tile bounce */
+      // tile bounce
+      let bounce = 0;
 
-    //   var bounce = 0;
+      if (left1.solid && left1.bounce > bounce) {
+        bounce = left1.bounce;
+      }
+      if (left2.solid && left2.bounce > bounce) {
+        bounce = left2.bounce;
+      }
+      if (right1.solid && right1.bounce > bounce) {
+        bounce = right1.bounce;
+      }
+      if (right2.solid && right2.bounce > bounce) {
+        bounce = right2.bounce;
+      }
 
-    //   if (left1.solid && left1.bounce > bounce) bounce = left1.bounce;
-    //   if (left2.solid && left2.bounce > bounce) bounce = left2.bounce;
-    //   if (right1.solid && right1.bounce > bounce) bounce = right1.bounce;
-    //   if (right2.solid && right2.bounce > bounce) bounce = right2.bounce;
+      this.player.vel.x *= -bounce || 0;
+    }
 
-    //   this.player.vel.x *= -bounce || 0;
 
-    // }
+    if (top1.solid || top2.solid || bottom1.solid || bottom2.solid) {
+      // fix overlap
+      while (this.getTile(x_near1, Math.floor(this.player.loc.y / this.tileSize)).solid || this.getTile(x_near2, Math.floor(this.player.loc.y / this.tileSize)).solid) {
+        this.player.loc.y += 0.1;
+      }
 
-    // if (top1.solid || top2.solid || bottom1.solid || bottom2.solid) {
+      while (this.getTile(x_near1, Math.ceil(this.player.loc.y / this.tileSize)).solid || this.getTile(x_near2, Math.ceil(this.player.loc.y / this.tileSize)).solid) {
+        this.player.loc.y -= 0.1;
+      }
 
-    //   /* fix overlap */
+      // tile bounce
+      let bounce = 0;
 
-    //   while (this.get_tile(x_near1, Math.floor(this.player.loc.y / this.tile_size)).solid
-    //     || this.get_tile(x_near2, Math.floor(this.player.loc.y / this.tile_size)).solid)
-    //     this.player.loc.y += 0.1;
+      if (top1.solid && top1.bounce > bounce) {
+        bounce = top1.bounce;
+      }
+      if (top2.solid && top2.bounce > bounce) {
+        bounce = top2.bounce;
+      }
+      if (bottom1.solid && bottom1.bounce > bounce) {
+        bounce = bottom1.bounce;
+      }
+      if (bottom2.solid && bottom2.bounce > bounce) {
+        bounce = bottom2.bounce;
+      }
 
-    //   while (this.get_tile(x_near1, Math.ceil(this.player.loc.y / this.tile_size)).solid
-    //     || this.get_tile(x_near2, Math.ceil(this.player.loc.y / this.tile_size)).solid)
-    //     this.player.loc.y -= 0.1;
+      this.player.vel.y *= -bounce || 0;
 
-    //   /* tile bounce */
+      if ((bottom1.solid || bottom2.solid) && !tile.jump) {
+        this.player.onFloor = true;
+        this.player.canJump = true;
+      }
+    }
 
-    //   var bounce = 0;
 
-    //   if (top1.solid && top1.bounce > bounce) bounce = top1.bounce;
-    //   if (top2.solid && top2.bounce > bounce) bounce = top2.bounce;
-    //   if (bottom1.solid && bottom1.bounce > bounce) bounce = bottom1.bounce;
-    //   if (bottom2.solid && bottom2.bounce > bounce) bounce = bottom2.bounce;
+    // adjust camera
+    let c_x = Math.round(this.player.loc.x - this.viewport.x / 2);
+    let c_y = Math.round(this.player.loc.y - this.viewport.y / 2);
+    let x_dif = Math.abs(c_x - this.camera.x);
+    let y_dif = Math.abs(c_y - this.camera.y);
 
-    //   this.player.vel.y *= -bounce || 0;
+    if (x_dif > 5) {
+      let mag = Math.round(Math.max(1, x_dif * 0.1));
 
-    //   if ((bottom1.solid || bottom2.solid) && !tile.jump) {
+      if (c_x !== this.camera.x) {
+        this.camera.x += c_x > this.camera.x ? mag : -mag;
 
-    //     this.player.on_floor = true;
-    //     this.player.can_jump = true;
-    //   }
+        if (this.limit_viewport) {
+          this.camera.x =
+            Math.min(
+              this.currentMap.widthP - this.viewport.x + this.tileSize,
+              this.camera.x
+            );
 
-    // }
+          this.camera.x =
+            Math.max(
+              0,
+              this.camera.x
+            );
+        }
+      }
+    }
 
-    // // adjust camera
 
-    // var c_x = Math.round(this.player.loc.x - this.viewport.x / 2);
-    // var c_y = Math.round(this.player.loc.y - this.viewport.y / 2);
-    // var x_dif = Math.abs(c_x - this.camera.x);
-    // var y_dif = Math.abs(c_y - this.camera.y);
+    if (y_dif > 5) {
+      let mag = Math.round(Math.max(1, y_dif * 0.1));
 
-    // if (x_dif > 5) {
+      if (c_y !== this.camera.y) {
+        this.camera.y += c_y > this.camera.y ? mag : -mag;
 
-    //   var mag = Math.round(Math.max(1, x_dif * 0.1));
+        if (this.limitViewport) {
+          this.camera.y =
+            Math.min(
+              this.currentMap.heightP - this.viewport.y + this.tileSize,
+              this.camera.y
+            );
 
-    //   if (c_x != this.camera.x) {
+          this.camera.y =
+            Math.max(
+              0,
+              this.camera.y
+            );
+        }
+      }
+    }
 
-    //     this.camera.x += c_x > this.camera.x ? mag : -mag;
 
-    //     if (this.limit_viewport) {
+    if (this.lastTile !== tile.id && tile.script) {
+      eval(this.currentMap.scripts[tile.script]);
+    }
 
-    //       this.camera.x =
-    //         Math.min(
-    //           this.current_map.width_p - this.viewport.x + this.tile_size,
-    //           this.camera.x
-    //         );
-
-    //       this.camera.x =
-    //         Math.max(
-    //           0,
-    //           this.camera.x
-    //         );
-    //     }
-    //   }
-    // }
-
-    // if (y_dif > 5) {
-
-    //   var mag = Math.round(Math.max(1, y_dif * 0.1));
-
-    //   if (c_y != this.camera.y) {
-
-    //     this.camera.y += c_y > this.camera.y ? mag : -mag;
-
-    //     if (this.limit_viewport) {
-
-    //       this.camera.y =
-    //         Math.min(
-    //           this.current_map.height_p - this.viewport.y + this.tile_size,
-    //           this.camera.y
-    //         );
-
-    //       this.camera.y =
-    //         Math.max(
-    //           0,
-    //           this.camera.y
-    //         );
-    //     }
-    //   }
-    // }
-
-    // if (this.last_tile != tile.id && tile.script) {
-
-    //   eval(this.current_map.scripts[tile.script]);
-    // }
-
-    // this.last_tile = tile.id;
+    this.lastTile = tile.id;
   }
 
   setViewport(x, y) {
@@ -345,7 +358,6 @@ class Graphic extends Component {
   loadMap(map) {
     if (typeof map === 'undefined' || typeof map.data === 'undefined' || typeof map.keys === 'undefined') {
       console.error('Error: Invalid map data!');
-      // this.error('Error: Invalid map data!');
       return false;
     }
 
@@ -392,6 +404,70 @@ class Graphic extends Component {
     };
 
     return true;
+  }
+
+  drawTile(x, y, tile, context) {
+    if (!tile || !tile.colour) {
+      return;
+    }
+
+    context.fillStyle = tile.colour;
+    context.fillRect(
+      x,
+      y,
+      this.tileSize,
+      this.tileSize
+    );
+  }
+
+  drawMap(context, fore) {
+    for (let y = 0; y < this.currentMap.data.length; y++) {
+      for (let x = 0; x < this.currentMap.data[y].length; x++) {
+        if ((!fore && !this.currentMap.data[y][x].fore) || (fore && this.currentMap.data[y][x].fore)) {
+
+          let t_x = (x * this.tileSize) - this.camera.x;
+          let t_y = (y * this.tileSize) - this.camera.y;
+
+          if (t_x < -this.tileSize
+            || t_y < -this.tileSize
+            || t_x > this.viewport.x
+            || t_y > this.viewport.y) {
+            continue;
+          }
+
+          this.drawTile(
+            t_x,
+            t_y,
+            this.currentMap.data[y][x],
+            context
+          );
+        }
+      }
+    }
+
+    if (!fore) {
+      this.drawMap(context, true);
+    }
+  }
+
+   drawPlayer(context) {
+      context.fillStyle = this.player.colour;
+      context.beginPath();
+
+      context.arc(
+          this.player.loc.x + this.tileSize / 2 - this.camera.x,
+          this.player.loc.y + this.tileSize / 2 - this.camera.y,
+          this.tileSize / 2 - 1,
+          0,
+          Math.PI * 2
+      );
+
+      context.fill();
+  }
+
+  draw(context) {
+    this.drawMap(context, false);
+    this.drawPlayer(context);
   }
 
   render() {
