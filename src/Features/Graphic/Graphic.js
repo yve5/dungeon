@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import './Graphic.scss';
+import { firstLevel } from '../../data/maps/2';
 
-import { map } from '../../data/maps/2';
 
 class Graphic extends Component {
 
   constructor(props) {
     super(props);
 
-    this.height = 500;
-    this.width = 500;
+    this.canvasHeight = 500;
+    this.canvasWidth = 500;
 
     this.alertErrors = false;
     this.logSnfo = true;
@@ -45,6 +44,21 @@ class Graphic extends Component {
       canJump: true
     };
 
+    this.state = {
+      player: {
+        loc: {
+          x: 0,
+          y: 0,
+        },
+        vel: {
+          x: 0,
+          y: 0,
+        },
+        canJump: true
+      },
+      notification: '',
+    }
+
 
     this.loop = this.loop.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -60,22 +74,58 @@ class Graphic extends Component {
     this.drawMap = this.drawMap.bind(this);
     this.drawPlayer = this.drawPlayer.bind(this);
     this.draw = this.draw.bind(this);
+    this.handleStart = this.handleStart.bind(this);
+    this.handleEnd = this.handleEnd.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleMove = this.handleMove.bind(this);
 
 
-    this.setViewport(this.width, this.height);
-    this.loadMap(map);
-    // this.limitViewport = true;
+    this.setViewport(this.canvasWidth, this.canvasHeight);
+    this.loadMap(firstLevel);
+    this.limitViewport = true;
+    this.touchIsSupported = 'ontouchstart' in window || navigator.msMaxTouchPoints;
   }
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
     window.addEventListener('keyup', this.handleKeyUp);
+
+    if (this.touchIsSupported) {
+      document.addEventListener('touchstart', this.handleStart);
+      document.addEventListener('touchend', this.handleEnd);
+      document.addEventListener('touchcancel', this.handleCancel);
+      document.addEventListener('touchmove', this.handleMove);
+    }
+
     window.requestAnimationFrame(this.loop);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keydown", this.handleKeyDown);
+    window.removeEventListener('keydown', this.handleKeyDown);
     window.removeEventListener('keyup', this.handleKeyUp);
+
+    if (this.touchIsSupported) {
+      document.addEventListener('touchstart', this.handleStart);
+      document.addEventListener('touchend', this.handleEnd);
+      document.addEventListener('touchcancel', this.handleCancel);
+      document.addEventListener('touchmove', this.handleMove);
+    }
+  }
+
+  handleStart(eve) {
+    console.log('handleStart', eve);
+  }
+
+  handleEnd(eve) {
+    console.log('handleEnd', eve);
+  }
+
+  handleCancel(eve) {
+    console.log('handleCancel', eve);
+  }
+
+  handleMove(eve) {
+    console.log('handleMove', eve);
   }
 
   handleKeyDown(eve) {
@@ -120,7 +170,7 @@ class Graphic extends Component {
     const ctx = canvas.getContext('2d');
 
     ctx.fillStyle = '#333';
-    ctx.fillRect(0, 0, this.width, this.height);
+    ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     this.update();
     this.draw(ctx)
@@ -132,16 +182,12 @@ class Graphic extends Component {
 
   updatePlayer() {
     if (this.key.left) {
-      console.info('left');
-
       if (this.player.vel.x > -this.currentMap.velLimit.x) {
         this.player.vel.x -= this.currentMap.movementSpeed.left;
       }
     }
 
     if (this.key.up) {
-      console.info('up');
-
       if (this.player.canJump && this.player.vel.y > -this.currentMap.velLimit.y) {
         this.player.vel.y -= this.currentMap.movementSpeed.jump;
         this.player.canJump = false;
@@ -149,8 +195,6 @@ class Graphic extends Component {
     }
 
     if (this.key.right) {
-      console.info('right');
-
       if (this.player.vel.x < this.currentMap.velLimit.x) {
         this.player.vel.x += this.currentMap.movementSpeed.left;
       }
@@ -304,17 +348,8 @@ class Graphic extends Component {
         this.camera.x += c_x > this.camera.x ? mag : -mag;
 
         if (this.limit_viewport) {
-          this.camera.x =
-            Math.min(
-              this.currentMap.widthP - this.viewport.x + this.tileSize,
-              this.camera.x
-            );
-
-          this.camera.x =
-            Math.max(
-              0,
-              this.camera.x
-            );
+          this.camera.x = Math.min(this.currentMap.widthP - this.viewport.x + this.tileSize, this.camera.x);
+          this.camera.x = Math.max(0, this.camera.x);
         }
       }
     }
@@ -327,24 +362,30 @@ class Graphic extends Component {
         this.camera.y += c_y > this.camera.y ? mag : -mag;
 
         if (this.limitViewport) {
-          this.camera.y =
-            Math.min(
-              this.currentMap.heightP - this.viewport.y + this.tileSize,
-              this.camera.y
-            );
-
-          this.camera.y =
-            Math.max(
-              0,
-              this.camera.y
-            );
+          this.camera.y = Math.min(this.currentMap.heightP - this.viewport.y + this.tileSize, this.camera.y);
+          this.camera.y = Math.max(0, this.camera.y);
         }
       }
     }
 
 
     if (this.lastTile !== tile.id && tile.script) {
-      eval(this.currentMap.scripts[tile.script]);
+      switch (tile.script) {
+        default:
+          console.error(this.currentMap.scripts[tile.script]);
+          break;
+        case 'death':
+          this.setState({ notification: 'You died! Try again ;)' });
+          this.loadMap(firstLevel);
+          break;
+      }
+
+      console.error(this.currentMap.scripts[tile.script]);
+
+      //   change_colour: 'this.player.colour = "#"+(Math.random()*0xFFFFFF<<0).toString(16);',
+      // /* you could load a new map variable here */
+      // next_level: 'alert("Yay! You won! Reloading map.");this.load_map(map);',
+      // unlock: 'this.current_map.keys[10].solid = 0;this.current_map.keys[10].colour = "#888";'
     }
 
     this.lastTile = tile.id;
@@ -450,19 +491,19 @@ class Graphic extends Component {
     }
   }
 
-   drawPlayer(context) {
-      context.fillStyle = this.player.colour;
-      context.beginPath();
+  drawPlayer(context) {
+    context.fillStyle = this.player.colour;
+    context.beginPath();
 
-      context.arc(
-          this.player.loc.x + this.tileSize / 2 - this.camera.x,
-          this.player.loc.y + this.tileSize / 2 - this.camera.y,
-          this.tileSize / 2 - 1,
-          0,
-          Math.PI * 2
-      );
+    context.arc(
+      this.player.loc.x + this.tileSize / 2 - this.camera.x,
+      this.player.loc.y + this.tileSize / 2 - this.camera.y,
+      this.tileSize / 2 - 1,
+      0,
+      Math.PI * 2
+    );
 
-      context.fill();
+    context.fill();
   }
 
   draw(context) {
@@ -471,8 +512,34 @@ class Graphic extends Component {
   }
 
   render() {
+    let notificationPanel;
+
+    if (this.state.notification !== '') {
+      notificationPanel = <div
+        style={{
+          'width': this.canvasWidth,
+          'backgroundColor': 'lime',
+          'margin': '1rem auto',
+          'textAlign': 'center',
+        }}
+      >
+        {this.state.notification}
+      </div>
+    }
+
     return (
-      <canvas ref="canvas" width={this.width} height={this.height} />
+      <div>
+        <canvas
+          ref="canvas"
+          width={this.canvasWidth}
+          height={this.canvasHeight}
+          style={{
+            'margin': '40px auto 20px',
+            'display': 'block',
+          }}
+        />
+        {notificationPanel}
+      </div>
     );
   }
 }

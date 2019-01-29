@@ -22,7 +22,7 @@ describe('Graphic', () => {
         x: 0,
         y: 0
       },
-      can_jump: true,
+      canJump: true,
       colour: "#FF9900"
     });
 

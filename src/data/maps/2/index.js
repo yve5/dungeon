@@ -1,4 +1,4 @@
-export const map = {
+export const firstLevel = {
 
   tileSize: 16,
 
