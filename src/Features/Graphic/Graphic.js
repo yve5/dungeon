@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { firstLevel } from '../../data/maps/2';
+import { FIRST_LEVEL } from '../../data/maps/2';
 
 
 class Graphic extends Component {
@@ -7,11 +7,6 @@ class Graphic extends Component {
   constructor(props) {
     super(props);
 
-    this.canvasHeight = 500;
-    this.canvasWidth = 500;
-
-    this.alertErrors = false;
-    this.logSnfo = true;
     this.tileSize = 16;
     this.limitViewport = false;
     this.jumpsSwitch = 0;
@@ -44,29 +39,12 @@ class Graphic extends Component {
       canJump: true
     };
 
-    this.state = {
-      player: {
-        loc: {
-          x: 0,
-          y: 0,
-        },
-        vel: {
-          x: 0,
-          y: 0,
-        },
-        canJump: true
-      },
-      notification: '',
-    }
-
-
     this.loop = this.loop.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.paint = this.paint.bind(this);
     this.update = this.update.bind(this);
     this.updatePlayer = this.updatePlayer.bind(this);
-    this.setViewport = this.setViewport.bind(this);
     this.loadMap = this.loadMap.bind(this);
     this.movePlayer = this.movePlayer.bind(this);
     this.getTile = this.getTile.bind(this);
@@ -80,17 +58,41 @@ class Graphic extends Component {
     this.handleMove = this.handleMove.bind(this);
 
 
-    this.setViewport(this.canvasWidth, this.canvasHeight);
-    this.loadMap(firstLevel);
-    this.limitViewport = true;
-    this.touchIsSupported = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+    this.state = {
+      canvasHeight: 500,
+      canvasWidth: 500,
+      logSnfo: true,
+      tileSize: 16,
+      limitViewport: false,
+      jumpsSwitch: 0,
+      viewportX: 200,
+      viewportY: 200,
+      cameraX: 0,
+      cameraY: 0,
+      keyLeft: false,
+      keyRight: false,
+      keyUp: false,
+      playerLocX: 0,
+      playerLocY: 0,
+      playerVelX: 0,
+      playerVelY: 0,
+      canJump: true,
+      notification: '',
+    }
   }
-
+  
   componentDidMount() {
+    // Playarea init
+    this.viewport.x = this.state.canvasWidth;
+    this.viewport.y = this.state.canvasHeight;
+    this.loadMap(FIRST_LEVEL);
+    this.limitViewport = true;
+
+    // Keyboard events
     window.addEventListener('keydown', this.handleKeyDown);
     window.addEventListener('keyup', this.handleKeyUp);
 
-    if (this.touchIsSupported) {
+    if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
       document.addEventListener('touchstart', this.handleStart);
       document.addEventListener('touchend', this.handleEnd);
       document.addEventListener('touchcancel', this.handleCancel);
@@ -104,7 +106,7 @@ class Graphic extends Component {
     window.removeEventListener('keydown', this.handleKeyDown);
     window.removeEventListener('keyup', this.handleKeyUp);
 
-    if (this.touchIsSupported) {
+    if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
       document.addEventListener('touchstart', this.handleStart);
       document.addEventListener('touchend', this.handleEnd);
       document.addEventListener('touchcancel', this.handleCancel);
@@ -170,7 +172,7 @@ class Graphic extends Component {
     const ctx = canvas.getContext('2d');
 
     ctx.fillStyle = '#333';
-    ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+    ctx.fillRect(0, 0, this.state.canvasWidth, this.state.canvasHeight);
 
     this.update();
     this.draw(ctx)
@@ -376,7 +378,7 @@ class Graphic extends Component {
           break;
         case 'death':
           this.setState({ notification: 'You died! Try again ;)' });
-          this.loadMap(firstLevel);
+          this.loadMap(FIRST_LEVEL);
           break;
       }
 
@@ -389,11 +391,6 @@ class Graphic extends Component {
     }
 
     this.lastTile = tile.id;
-  }
-
-  setViewport(x, y) {
-    this.viewport.x = x;
-    this.viewport.y = y;
   }
 
   loadMap(map) {
@@ -517,7 +514,7 @@ class Graphic extends Component {
     if (this.state.notification !== '') {
       notificationPanel = <div
         style={{
-          'width': this.canvasWidth,
+          'width': this.state.canvasWidth,
           'backgroundColor': 'lime',
           'margin': '1rem auto',
           'textAlign': 'center',
@@ -531,8 +528,8 @@ class Graphic extends Component {
       <div>
         <canvas
           ref="canvas"
-          width={this.canvasWidth}
-          height={this.canvasHeight}
+          width={this.state.canvasWidth}
+          height={this.state.canvasHeight}
           style={{
             'margin': '40px auto 20px',
             'display': 'block',

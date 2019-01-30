@@ -1,4 +1,4 @@
-export const firstLevel = {
+export const FIRST_LEVEL = {
 
   tileSize: 16,
 
