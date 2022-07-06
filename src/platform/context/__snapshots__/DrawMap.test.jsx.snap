@@ -1,0 +1,514 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DrawMap should draw map. default 1`] = `
+canvas2dContextMock {
+  "fillStyle": "#555",
+  "logs": Array [
+    Object {
+      "args": Array [
+        -1,
+        -7,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        15,
+        -7,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        31,
+        -7,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        47,
+        -7,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        63,
+        -7,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        79,
+        -7,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        95,
+        -7,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        -1,
+        9,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        15,
+        9,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        31,
+        9,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        47,
+        9,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        63,
+        9,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        79,
+        9,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        95,
+        9,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        -1,
+        25,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        15,
+        25,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        31,
+        25,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        47,
+        25,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        63,
+        25,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        79,
+        25,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        95,
+        25,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        -1,
+        41,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        15,
+        41,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        31,
+        41,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        47,
+        41,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        63,
+        41,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        79,
+        41,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        95,
+        41,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        -1,
+        57,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        15,
+        57,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        31,
+        57,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        47,
+        57,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        63,
+        57,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        79,
+        57,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        95,
+        57,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        -1,
+        73,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        15,
+        73,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        31,
+        73,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        47,
+        73,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        63,
+        73,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        79,
+        73,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        95,
+        73,
+        16,
+        16,
+      ],
+      "fillStyle": "#888",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        -1,
+        89,
+        16,
+        16,
+      ],
+      "fillStyle": "#555",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        15,
+        89,
+        16,
+        16,
+      ],
+      "fillStyle": "#555",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        31,
+        89,
+        16,
+        16,
+      ],
+      "fillStyle": "#555",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        47,
+        89,
+        16,
+        16,
+      ],
+      "fillStyle": "#555",
+      "type": "fillRect",
+    },
+  ],
+}
+`;
+
+exports[`DrawMap should draw map. fore 1`] = `
+canvas2dContextMock {
+  "fillStyle": "rgba(121, 220, 242, 0.4)",
+  "logs": Array [
+    Object {
+      "args": Array [
+        63,
+        89,
+        16,
+        16,
+      ],
+      "fillStyle": "rgba(121, 220, 242, 0.4)",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        79,
+        89,
+        16,
+        16,
+      ],
+      "fillStyle": "rgba(121, 220, 242, 0.4)",
+      "type": "fillRect",
+    },
+    Object {
+      "args": Array [
+        95,
+        89,
+        16,
+        16,
+      ],
+      "fillStyle": "rgba(121, 220, 242, 0.4)",
+      "type": "fillRect",
+    },
+  ],
+}
+`;
+
+exports[`DrawMap should draw map. undefined 1`] = `
+canvas2dContextMock {
+  "fillStyle": "",
+  "logs": Array [],
+}
+`;

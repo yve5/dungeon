@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`drawPlayer should draw player. default 1`] = `
+canvas2dContextMock {
+  "fillStyle": "#FF9900",
+  "logs": Array [
+    Object {
+      "type": "beginPath",
+    },
+    Object {
+      "args": Array [
+        8,
+        8,
+        7,
+        0,
+        6.283185307179586,
+      ],
+      "fillStyle": "#FF9900",
+      "type": "arc",
+    },
+    Object {
+      "fillStyle": "#FF9900",
+      "type": "fill",
+    },
+  ],
+}
+`;
+
+exports[`drawPlayer should draw player. undefined 1`] = `
+canvas2dContextMock {
+  "fillStyle": "",
+  "logs": Array [],
+}
+`;
