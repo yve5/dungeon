@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/dungeon/static/css/main.b48e614b.chunk.css",
-    "main.js": "/dungeon/static/js/main.dbb760ae.chunk.js",
-    "main.js.map": "/dungeon/static/js/main.dbb760ae.chunk.js.map",
-    "runtime-main.js": "/dungeon/static/js/runtime-main.2e29f59d.js",
-    "runtime-main.js.map": "/dungeon/static/js/runtime-main.2e29f59d.js.map",
-    "static/js/2.08be4cf3.chunk.js": "/dungeon/static/js/2.08be4cf3.chunk.js",
-    "static/js/2.08be4cf3.chunk.js.map": "/dungeon/static/js/2.08be4cf3.chunk.js.map",
-    "index.html": "/dungeon/index.html",
-    "static/css/main.b48e614b.chunk.css.map": "/dungeon/static/css/main.b48e614b.chunk.css.map",
-    "static/js/2.08be4cf3.chunk.js.LICENSE.txt": "/dungeon/static/js/2.08be4cf3.chunk.js.LICENSE.txt"
+    "main.css": "/platformer/static/css/main.b48e614b.chunk.css",
+    "main.js": "/platformer/static/js/main.06b0cc41.chunk.js",
+    "main.js.map": "/platformer/static/js/main.06b0cc41.chunk.js.map",
+    "runtime-main.js": "/platformer/static/js/runtime-main.8c1a8662.js",
+    "runtime-main.js.map": "/platformer/static/js/runtime-main.8c1a8662.js.map",
+    "static/js/2.66aa3e1a.chunk.js": "/platformer/static/js/2.66aa3e1a.chunk.js",
+    "static/js/2.66aa3e1a.chunk.js.map": "/platformer/static/js/2.66aa3e1a.chunk.js.map",
+    "index.html": "/platformer/index.html",
+    "static/css/main.b48e614b.chunk.css.map": "/platformer/static/css/main.b48e614b.chunk.css.map",
+    "static/js/2.66aa3e1a.chunk.js.LICENSE.txt": "/platformer/static/js/2.66aa3e1a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.2e29f59d.js",
-    "static/js/2.08be4cf3.chunk.js",
+    "static/js/runtime-main.8c1a8662.js",
+    "static/js/2.66aa3e1a.chunk.js",
     "static/css/main.b48e614b.chunk.css",
-    "static/js/main.dbb760ae.chunk.js"
+    "static/js/main.06b0cc41.chunk.js"
   ]
 }
