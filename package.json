@@ -5,9 +5,16 @@
   "homepage": "http://yve5.github.io/platformer",
   "dependencies": {
     "eslint-config-airbnb": "19.0.4",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-scripts": "5.0.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "13.4.0",
+    "@testing-library/user-event": "14.4.3",
+    "gh-pages": "2.0.1",
+    "jest-watch-typeahead": "0.6.5"
   },
   "scripts": {
     "start": "PORT=1338 react-scripts start",
@@ -31,12 +38,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/react": "12.1.3",
-    "@testing-library/user-event": "14.2.1",
-    "gh-pages": "2.0.1",
-    "jest-watch-typeahead": "0.6.5"
   }
 }

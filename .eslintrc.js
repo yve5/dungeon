@@ -12,6 +12,7 @@ module.exports = {
     'jsx-a11y/no-noninteractive-element-interactions': 'off',
     'jsx-a11y/control-has-associated-label': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
+    'jsx-a11y/no-autofocus': 'off',
     'no-template-curly-in-string': 'off',
     'no-restricted-globals': 'off',
     'react/no-array-index-key': 'off',
@@ -30,7 +31,6 @@ module.exports = {
     'no-confusing-arrow': 'off',
     'function-paren-newline': 'off',
     'operator-linebreak': 'off',
-    'no-shadow': 'off',
     'max-len': 'off',
 
     'arrow-body-style': ['warn', 'as-needed'],
@@ -46,28 +46,16 @@ module.exports = {
     ],
     'no-underscore-dangle': [
       'error',
-      {
-        allow: ['__REDUX_DEVTOOLS_EXTENSION__'],
-      },
+      { allow: ['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] },
     ],
     'react/jsx-indent': [
       'warn',
       2,
       { checkAttributes: false, indentLogicalExpressions: false },
     ],
-
     'no-trailing-spaces': 'warn',
     'no-unused-vars': 'warn',
     'no-multiple-empty-lines': 'warn',
     'prefer-const': 'warn',
-    indent: 'warn',
-  },
-  settings: {
-    'import/extensions': ['.js', '.jsx'],
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx'],
-      },
-    },
   },
 };
