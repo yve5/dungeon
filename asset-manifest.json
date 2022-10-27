@@ -1,20 +1,13 @@
 {
   "files": {
-    "main.css": "/platformer/static/css/main.a0fa2603.chunk.css",
-    "main.js": "/platformer/static/js/main.99d4f9c0.chunk.js",
-    "main.js.map": "/platformer/static/js/main.99d4f9c0.chunk.js.map",
-    "runtime-main.js": "/platformer/static/js/runtime-main.8c1a8662.js",
-    "runtime-main.js.map": "/platformer/static/js/runtime-main.8c1a8662.js.map",
-    "static/js/2.bb704549.chunk.js": "/platformer/static/js/2.bb704549.chunk.js",
-    "static/js/2.bb704549.chunk.js.map": "/platformer/static/js/2.bb704549.chunk.js.map",
+    "main.css": "/platformer/static/css/main.2475a739.css",
+    "main.js": "/platformer/static/js/main.40f8ada1.js",
     "index.html": "/platformer/index.html",
-    "static/css/main.a0fa2603.chunk.css.map": "/platformer/static/css/main.a0fa2603.chunk.css.map",
-    "static/js/2.bb704549.chunk.js.LICENSE.txt": "/platformer/static/js/2.bb704549.chunk.js.LICENSE.txt"
+    "main.2475a739.css.map": "/platformer/static/css/main.2475a739.css.map",
+    "main.40f8ada1.js.map": "/platformer/static/js/main.40f8ada1.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.8c1a8662.js",
-    "static/js/2.bb704549.chunk.js",
-    "static/css/main.a0fa2603.chunk.css",
-    "static/js/main.99d4f9c0.chunk.js"
+    "static/css/main.2475a739.css",
+    "static/js/main.40f8ada1.js"
   ]
 }
