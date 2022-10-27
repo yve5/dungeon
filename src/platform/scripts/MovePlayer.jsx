@@ -1,8 +1,7 @@
-const round = (value, precision = 100000) =>
-  Math.round(value * precision) / precision;
+// const round = (value, precision = 100000) =>
+//   Math.round(value * precision) / precision;
 
-const getTileContainer = (data) => (x, y) =>
-  data[y] && data[y][x] ? data[y][x] : 0;
+const getTileContainer = (data) => (x, y) => data[y] && data[y][x] ? data[y][x] : 0;
 
 export const movePlayer = (platform, keys, limitViewport = true) => {
   let result = {};
@@ -10,17 +9,7 @@ export const movePlayer = (platform, keys, limitViewport = true) => {
   if (platform?.map?.player) {
     const { camera, map, viewport } = platform;
 
-    const {
-      data,
-      gravity,
-      height,
-      jumpsSwitch,
-      movementSpeed,
-      player,
-      tileSize,
-      velLimit,
-      width,
-    } = map;
+    const { data, gravity, height, jumpsSwitch, movementSpeed, player, tileSize, velLimit, width } = map;
 
     const inPlayer = {
       ...player,
@@ -37,7 +26,7 @@ export const movePlayer = (platform, keys, limitViewport = true) => {
     }
 
     if (keys.up === true && inPlayer.canJump && inPlayer.vel.y > -velLimit.y) {
-      console.log(inPlayer.vel.y);
+      // console.log(inPlayer.vel.y);
 
       inPlayer.vel.y -= movementSpeed.jump;
       inPlayer.canJump = false;
@@ -45,10 +34,7 @@ export const movePlayer = (platform, keys, limitViewport = true) => {
 
     const getTile = getTileContainer(data);
 
-    const tile = getTile(
-      Math.round(inPlayer.loc.x / tileSize),
-      Math.round(inPlayer.loc.y / tileSize)
-    );
+    const tile = getTile(Math.round(inPlayer.loc.x / tileSize), Math.round(inPlayer.loc.y / tileSize));
 
     if (tile.gravity) {
       inPlayer.vel.x += tile.gravity.x;
@@ -92,15 +78,9 @@ export const movePlayer = (platform, keys, limitViewport = true) => {
       inJumpsSwitch += 1;
     }
 
-    inPlayer.vel.x = Math.min(
-      Math.max(inPlayer.vel.x, -velLimit.x),
-      velLimit.x
-    );
+    inPlayer.vel.x = Math.min(Math.max(inPlayer.vel.x, -velLimit.x), velLimit.x);
 
-    inPlayer.vel.y = Math.min(
-      Math.max(inPlayer.vel.y, -velLimit.y),
-      velLimit.y
-    );
+    inPlayer.vel.y = Math.min(Math.max(inPlayer.vel.y, -velLimit.y), velLimit.y);
 
     inPlayer.loc.x += inPlayer.vel.x;
     inPlayer.loc.y += inPlayer.vel.y;
@@ -108,17 +88,11 @@ export const movePlayer = (platform, keys, limitViewport = true) => {
 
     if (left1.solid || left2.solid || right1.solid || right2.solid) {
       // fix overlap
-      while (
-        getTile(Math.floor(inPlayer.loc.x / tileSize), yNear1).solid ||
-        getTile(Math.floor(inPlayer.loc.x / tileSize), yNear2).solid
-      ) {
+      while (getTile(Math.floor(inPlayer.loc.x / tileSize), yNear1).solid || getTile(Math.floor(inPlayer.loc.x / tileSize), yNear2).solid) {
         inPlayer.loc.x += 0.1;
       }
 
-      while (
-        getTile(Math.ceil(inPlayer.loc.x / tileSize), yNear1).solid ||
-        getTile(Math.ceil(inPlayer.loc.x / tileSize), yNear2).solid
-      ) {
+      while (getTile(Math.ceil(inPlayer.loc.x / tileSize), yNear1).solid || getTile(Math.ceil(inPlayer.loc.x / tileSize), yNear2).solid) {
         inPlayer.loc.x -= 0.1;
       }
 
@@ -146,17 +120,11 @@ export const movePlayer = (platform, keys, limitViewport = true) => {
 
     if (top1.solid || top2.solid || bottom1.solid || bottom2.solid) {
       // fix overlap
-      while (
-        getTile(xNear1, Math.floor(inPlayer.loc.y / tileSize)).solid ||
-        getTile(xNear2, Math.floor(inPlayer.loc.y / tileSize)).solid
-      ) {
+      while (getTile(xNear1, Math.floor(inPlayer.loc.y / tileSize)).solid || getTile(xNear2, Math.floor(inPlayer.loc.y / tileSize)).solid) {
         inPlayer.loc.y += 0.1;
       }
 
-      while (
-        getTile(xNear1, Math.ceil(inPlayer.loc.y / tileSize)).solid ||
-        getTile(xNear2, Math.ceil(inPlayer.loc.y / tileSize)).solid
-      ) {
+      while (getTile(xNear1, Math.ceil(inPlayer.loc.y / tileSize)).solid || getTile(xNear2, Math.ceil(inPlayer.loc.y / tileSize)).solid) {
         inPlayer.loc.y -= 0.1;
       }
 
@@ -187,10 +155,10 @@ export const movePlayer = (platform, keys, limitViewport = true) => {
       }
     }
 
-    inPlayer.loc.x = round(inPlayer.loc.x);
-    inPlayer.loc.y = round(inPlayer.loc.y);
-    inPlayer.vel.x = round(inPlayer.vel.x);
-    inPlayer.vel.y = round(inPlayer.vel.y);
+    // inPlayer.loc.x = round(inPlayer.loc.x);
+    // inPlayer.loc.y = round(inPlayer.loc.y);
+    // inPlayer.vel.x = round(inPlayer.vel.x);
+    // inPlayer.vel.y = round(inPlayer.vel.y);
 
     // adjust camera
     const inCamera = {
@@ -206,25 +174,13 @@ export const movePlayer = (platform, keys, limitViewport = true) => {
     if (xDif > 5 && cX !== inCamera.x && limitViewport) {
       const mag = Math.round(Math.max(1, xDif * 0.1));
 
-      inCamera.x = Math.max(
-        0,
-        Math.min(
-          width - viewport.x + tileSize,
-          inCamera.x + (cX > inCamera.x ? mag : -mag)
-        )
-      );
+      inCamera.x = Math.max(0, Math.min(width - viewport.x + tileSize, inCamera.x + (cX > inCamera.x ? mag : -mag)));
     }
 
     if (yDif > 5 && cY !== inCamera.y && limitViewport) {
       const mag = Math.round(Math.max(1, yDif * 0.1));
 
-      inCamera.y = Math.max(
-        0,
-        Math.min(
-          height - viewport.y + tileSize,
-          inCamera.y + (cY > inCamera.y ? mag : -mag)
-        )
-      );
+      inCamera.y = Math.max(0, Math.min(height - viewport.y + tileSize, inCamera.y + (cY > inCamera.y ? mag : -mag)));
     }
 
     result = {
