@@ -5,6 +5,8 @@
   "homepage": "http://yve5.github.io/platformer",
   "dependencies": {
     "eslint-config-airbnb": "19.0.4",
+    "phaser": "3.60.0",
+    "prop-types": "15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-scripts": "5.0.1"
@@ -17,7 +19,7 @@
     "jest-watch-typeahead": "0.6.5"
   },
   "scripts": {
-    "start": "PORT=1338 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
