@@ -140,9 +140,27 @@ class First extends Scene {
       null,
       this
     );
+
+    // this.cameras.main.setBounds(0, 0, 3392, 100);
+    // this.physics.world.setBounds(0, 0, 3392, 240);
+    // this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
+    // this.cameras.main.setZoom(2);
   }
 
   update() {
+    // const pointer = this.input.activePointer;
+    // if (pointer.isDown) {
+    //   console.log(pointer);
+    // }
+
+    this.input.on(
+      'drag',
+      (pointer, localX, localY, event) => {
+        console.log(pointer, localX, localY, event);
+      },
+      this
+    );
+
     if (!this.gameOver) {
       if (this.cursors.left.isDown) {
         this.player.setVelocityX(-160);
