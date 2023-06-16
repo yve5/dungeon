@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/platformer/static/css/main.53026e67.css",
-    "main.js": "/platformer/static/js/main.53563eca.js",
+    "main.js": "/platformer/static/js/main.5d8df153.js",
     "index.html": "/platformer/index.html",
     "main.53026e67.css.map": "/platformer/static/css/main.53026e67.css.map",
-    "main.53563eca.js.map": "/platformer/static/js/main.53563eca.js.map"
+    "main.5d8df153.js.map": "/platformer/static/js/main.5d8df153.js.map"
   },
   "entrypoints": [
     "static/css/main.53026e67.css",
-    "static/js/main.53563eca.js"
+    "static/js/main.5d8df153.js"
   ]
 }
