@@ -1,5 +1,5 @@
 import React from 'react';
-import Game from './phaser/first';
+import Game from './phaser';
 
 import './App.css';
 

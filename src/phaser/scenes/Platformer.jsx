@@ -1,4 +1,14 @@
 import { Math, Scene } from 'phaser';
+import {
+  FIRST_ASSET_BOMB,
+  FIRST_ASSET_DUDE,
+  FIRST_ASSET_GROUND,
+  FIRST_ASSET_SKY,
+  FIRST_ASSET_STAR,
+  FIRST_KEY_LEFT,
+  FIRST_KEY_RIGHT,
+  FIRST_KEY_TURN,
+} from '../resources/constants';
 
 const { REACT_APP_FIRST_ASSETS_PATH: assetsPath } = process.env;
 
@@ -18,11 +28,11 @@ class First extends Scene {
   }
 
   preload() {
-    this.load.image('sky', `${assetsPath}sky.png`);
-    this.load.image('ground', `${assetsPath}platform.png`);
-    this.load.image('star', `${assetsPath}star.png`);
-    this.load.image('bomb', `${assetsPath}bomb.png`);
-    this.load.spritesheet('dude', `${assetsPath}dude.png`, {
+    this.load.image(FIRST_ASSET_SKY, `${assetsPath}sky.png`);
+    this.load.image(FIRST_ASSET_GROUND, `${assetsPath}platform.png`);
+    this.load.image(FIRST_ASSET_STAR, `${assetsPath}star.png`);
+    this.load.image(FIRST_ASSET_BOMB, `${assetsPath}bomb.png`);
+    this.load.spritesheet(FIRST_ASSET_DUDE, `${assetsPath}dude.png`, {
       frameWidth: 32,
       frameHeight: 48,
     });
@@ -30,22 +40,25 @@ class First extends Scene {
 
   create() {
     //  A simple background for our game
-    this.add.image(400, 300, 'sky');
+    this.add.image(400, 300, FIRST_ASSET_SKY);
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     this.platforms = this.physics.add.staticGroup();
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    this.platforms
+      .create(400, 568, FIRST_ASSET_GROUND)
+      .setScale(2)
+      .refreshBody();
 
     //  Now let's create some ledges
-    this.platforms.create(600, 400, 'ground');
-    this.platforms.create(50, 250, 'ground');
-    this.platforms.create(750, 220, 'ground');
+    this.platforms.create(600, 400, FIRST_ASSET_GROUND);
+    this.platforms.create(50, 250, FIRST_ASSET_GROUND);
+    this.platforms.create(750, 220, FIRST_ASSET_GROUND);
 
     // The player and its settings
-    this.player = this.physics.add.sprite(100, 450, 'dude');
+    this.player = this.physics.add.sprite(100, 450, FIRST_ASSET_DUDE);
 
     //  Player physics properties. Give the little guy a slight bounce.
     this.player.setBounce(0.2);
@@ -53,21 +66,27 @@ class First extends Scene {
 
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
-      key: 'left',
-      frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+      key: FIRST_KEY_LEFT,
+      frames: this.anims.generateFrameNumbers(FIRST_ASSET_DUDE, {
+        start: 0,
+        end: 3,
+      }),
       frameRate: 10,
       repeat: -1,
     });
 
     this.anims.create({
-      key: 'turn',
-      frames: [{ key: 'dude', frame: 4 }],
+      key: FIRST_KEY_TURN,
+      frames: [{ key: FIRST_ASSET_DUDE, frame: 4 }],
       frameRate: 20,
     });
 
     this.anims.create({
-      key: 'right',
-      frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+      key: FIRST_KEY_RIGHT,
+      frames: this.anims.generateFrameNumbers(FIRST_ASSET_DUDE, {
+        start: 5,
+        end: 8,
+      }),
       frameRate: 10,
       repeat: -1,
     });
@@ -77,9 +96,13 @@ class First extends Scene {
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     this.stars = this.physics.add.group({
-      key: 'star',
+      key: FIRST_ASSET_STAR,
       repeat: 11,
-      setXY: { x: 12, y: 0, stepX: 70 },
+      setXY: {
+        x: 12,
+        y: 0,
+        stepX: 70,
+      },
     });
 
     this.stars.children.iterate((child) => {
@@ -90,7 +113,7 @@ class First extends Scene {
     this.bombs = this.physics.add.group();
 
     //  The score
-    this.scoreText = this.add.text(16, 16, 'score: 0', {
+    this.scoreText = this.add.text(16, 16, 'Score: 0', {
       fontSize: '32px',
       fill: '#000',
     });
@@ -123,13 +146,13 @@ class First extends Scene {
     if (!this.gameOver) {
       if (this.cursors.left.isDown) {
         this.player.setVelocityX(-160);
-        this.player.anims.play('left', true);
+        this.player.anims.play(FIRST_KEY_LEFT, true);
       } else if (this.cursors.right.isDown) {
         this.player.setVelocityX(160);
-        this.player.anims.play('right', true);
+        this.player.anims.play(FIRST_KEY_RIGHT, true);
       } else {
         this.player.setVelocityX(0);
-        this.player.anims.play('turn');
+        this.player.anims.play(FIRST_KEY_TURN);
       }
 
       if (this.cursors.up.isDown && this.player.body.touching.down) {
@@ -152,7 +175,7 @@ class First extends Scene {
       });
 
       const x = player.x < 400 ? Math.Between(400, 800) : Math.Between(0, 400);
-      const bomb = this.bombs.create(x, 16, 'bomb');
+      const bomb = this.bombs.create(x, 16, FIRST_ASSET_BOMB);
 
       bomb.setBounce(1);
       bomb.setCollideWorldBounds(true);
@@ -162,8 +185,10 @@ class First extends Scene {
 
   hitBomb(player) {
     this.physics.pause();
+
     player.setTint(0xff0000);
-    player.anims.play('turn');
+    player.anims.play(FIRST_KEY_TURN);
+
     this.gameOver = true;
   }
 }
