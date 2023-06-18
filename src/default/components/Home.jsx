@@ -1,8 +1,8 @@
 import React from 'react';
-import Game from './Game';
+import Game from '../../shared/Game';
 import Platformer from '../scenes/Platformer';
 
-const Home = () => (
+const Default = () => (
   <Game
     options={{
       width: 800,
@@ -22,4 +22,4 @@ const Home = () => (
   />
 );
 
-export default Home;
+export default Default;

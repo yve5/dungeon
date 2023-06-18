@@ -1,5 +1,5 @@
 import React from 'react';
-import Game from './phaser';
+import Game from './slope';
 
 import './App.css';
 
