@@ -1,9 +1,15 @@
-export const FIRST_ASSET_BOMB = 'bomb';
-export const FIRST_ASSET_DUDE = 'dude';
-export const FIRST_ASSET_GROUND = 'ground';
-export const FIRST_ASSET_SKY = 'sky';
-export const FIRST_ASSET_STAR = 'star';
+export const SCENE_LOAD = 'LoadScene';
+export const SCENE_PLAY = 'PlayScene';
 
-export const FIRST_KEY_LEFT = 'left';
-export const FIRST_KEY_RIGHT = 'right';
-export const FIRST_KEY_TURN = 'turn';
+export const ASSET_PLAYER = 'player';
+export const ASSET_FLOOR = 'floor';
+export const ASSET_BIG = 'big';
+export const ASSET_SLOPE = 'slope';
+
+export const KEY_IDLE = 'idle';
+export const KEY_JUMP = 'jump';
+export const KEY_RUN = 'run';
+
+export const CONFIG_GRAVITY_Y = 400;
+export const CONFIG_PLAYER_VEL_X = 64;
+export const CONFIG_PLAYER_VEL_Y = -192;

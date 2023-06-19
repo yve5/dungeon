@@ -1,23 +1,33 @@
-import Phaser from 'phaser';
+import { Scene } from 'phaser';
+import {
+  SCENE_LOAD,
+  SCENE_PLAY,
+  ASSET_PLAYER,
+  ASSET_FLOOR,
+  ASSET_BIG,
+  ASSET_SLOPE,
+} from '../resources/constants';
 
-class LoadScene extends Phaser.Scene {
+const { REACT_APP_SLOPE_ASSETS_PATH: assetsPath } = process.env;
+
+class Loading extends Scene {
   constructor() {
-    super({ key: 'LoadScene' });
+    super({ key: SCENE_LOAD });
   }
 
   preload() {
-    this.load.spritesheet('player', './platformer/assets/slope/hero.png', {
+    this.load.spritesheet(ASSET_PLAYER, `${assetsPath}hero.png`, {
       frameWidth: 20,
       frameHeight: 32,
     });
-    this.load.image('floor', './platformer/assets/slope/floor.png');
-    this.load.image('big', './platformer/assets/slope/big.png');
-    this.load.image('slope', './platformer/assets/slope/slope.png');
+    this.load.image(ASSET_FLOOR, `${assetsPath}floor.png`);
+    this.load.image(ASSET_BIG, `${assetsPath}big.png`);
+    this.load.image(ASSET_SLOPE, `${assetsPath}slope.png`);
   }
 
   create() {
-    this.scene.start('PlayScene');
+    this.scene.start(SCENE_PLAY);
   }
 }
 
-export default LoadScene;
+export default Loading;

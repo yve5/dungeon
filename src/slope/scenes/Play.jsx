@@ -1,19 +1,29 @@
-import Phaser from 'phaser';
+import { Geom, Input, Scene } from 'phaser';
+import {
+  SCENE_PLAY,
+  ASSET_PLAYER,
+  ASSET_FLOOR,
+  ASSET_BIG,
+  ASSET_SLOPE,
+  KEY_IDLE,
+  KEY_JUMP,
+  KEY_RUN,
+  CONFIG_GRAVITY_Y,
+  CONFIG_PLAYER_VEL_X,
+  CONFIG_PLAYER_VEL_Y,
+} from '../resources/constants';
 
-const playerVelX = 64;
-const playerVelY = -192;
-const gravityY = 400;
-
-class PlayScene extends Phaser.Scene {
+class Play extends Scene {
   constructor() {
-    super({ key: 'PlayScene' });
+    super({ key: SCENE_PLAY });
   }
 
   create() {
     this.createGround();
     this.createPlayer();
-    this.createText();
     this.physics.add.collider([this.floor, this.big], this.player);
+
+    this.createText();
   }
 
   createText() {
@@ -29,7 +39,7 @@ class PlayScene extends Phaser.Scene {
     this.floor = this.physics.add.sprite(
       0,
       this.game.config.height - 32,
-      'floor'
+      ASSET_FLOOR
     );
     this.floor.setImmovable(true);
     this.floor.setOrigin(0);
@@ -38,7 +48,7 @@ class PlayScene extends Phaser.Scene {
     this.big = this.physics.add.sprite(
       this.floor.width,
       this.game.config.height - 132,
-      'big'
+      ASSET_BIG
     );
     this.big.x = this.floor.width - this.big.width;
     this.big.setImmovable(true);
@@ -48,12 +58,12 @@ class PlayScene extends Phaser.Scene {
     this.slope = this.physics.add.sprite(
       this.big.x - this.big.width,
       this.game.config.height - 132,
-      'slope'
+      ASSET_SLOPE
     );
     this.slope.setImmovable(true);
     this.slope.setOrigin(0);
 
-    this.triangle = new Phaser.Geom.Triangle(
+    this.triangle = new Geom.Triangle(
       this.slope.x,
       this.slope.y + this.slope.height,
       this.slope.x + this.slope.width,
@@ -69,8 +79,8 @@ class PlayScene extends Phaser.Scene {
 
   createPlayer() {
     this.anims.create({
-      key: 'run',
-      frames: this.anims.generateFrameNumbers('player', {
+      key: KEY_RUN,
+      frames: this.anims.generateFrameNumbers(ASSET_PLAYER, {
         start: 0,
         end: 3,
         first: 1,
@@ -80,16 +90,16 @@ class PlayScene extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: 'idle',
-      frames: this.anims.generateFrameNumbers('player', {
+      key: KEY_IDLE,
+      frames: this.anims.generateFrameNumbers(ASSET_PLAYER, {
         start: 0,
         end: 0,
       }),
     });
 
     this.anims.create({
-      key: 'jump',
-      frames: this.anims.generateFrameNumbers('player', {
+      key: KEY_JUMP,
+      frames: this.anims.generateFrameNumbers(ASSET_PLAYER, {
         start: 3,
         end: 3,
       }),
@@ -98,25 +108,33 @@ class PlayScene extends Phaser.Scene {
     this.player = this.physics.add.sprite(
       this.game.config.width / 2 - 24,
       this.game.config.height - 48,
-      'player'
+      ASSET_PLAYER
     );
-    this.player.name = 'player';
-    this.player.anims.play('idle');
-    this.player.body.gravity.y = gravityY;
+    this.player.name = ASSET_PLAYER;
+    this.player.anims.play(KEY_IDLE);
+    this.player.body.gravity.y = CONFIG_GRAVITY_Y;
+    this.player.setCollideWorldBounds(true);
+    this.player.setInteractive({ draggable: true });
 
-    const { RIGHT, LEFT, UP } = Phaser.Input.Keyboard.KeyCodes;
+    this.input.on('dragstart', (pointer, player) => {
+      player.setTint(0xff0000);
+    });
+
+    this.input.on('drag', (pointer, player, dragX, dragY) => {
+      player.setPosition(dragX, dragY);
+    });
+
+    this.input.on('dragend', (pointer, player) => {
+      player.clearTint();
+    });
+
+    const { RIGHT, LEFT, UP } = Input.Keyboard.KeyCodes;
 
     this.keys = this.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
       up: UP,
     });
-  }
-
-  jump() {
-    this.player.body.setAllowGravity(true);
-    this.player.body.gravity.y = gravityY;
-    this.player.body.setVelocityY(playerVelY);
   }
 
   update() {
@@ -129,44 +147,46 @@ class PlayScene extends Phaser.Scene {
     this.graphics.lineStyle(2, 0xff0000);
 
     if ((right.isDown || left.isDown) && (isGround || this.player.isOnSlope)) {
-      this.player.anims.play('run', true);
+      this.player.anims.play(KEY_RUN, true);
     } else if (!isGround && !this.player.isOnSlope) {
-      this.player.anims.play('jump', true);
+      this.player.anims.play(KEY_JUMP, true);
     } else {
-      this.player.anims.play('idle', true);
+      this.player.anims.play(KEY_IDLE, true);
     }
 
     if (right.isDown) {
-      this.player.body.setVelocityX(playerVelX);
+      this.player.body.setVelocityX(CONFIG_PLAYER_VEL_X);
       this.player.setFlipX(false);
     } else if (left.isDown) {
-      this.player.body.setVelocityX(-playerVelX);
+      this.player.body.setVelocityX(-CONFIG_PLAYER_VEL_X);
       this.player.setFlipX(true);
     } else if (!isGround && !this.player.isOnSlope) {
-      this.player.body.velocity.x *= 0.98;
+      this.player.body.setVelocityX(this.player.body.velocity.x * 0.98);
     } else {
       this.player.body.setVelocityX(0);
     }
 
     if (isGround && up.isDown) {
-      this.player.body.setVelocityY(playerVelY);
+      this.player.body.setVelocityY(CONFIG_PLAYER_VEL_Y);
     }
 
     if (
       this.physics.world.intersects(this.player.body, this.slope.body) &&
-      Phaser.Geom.Intersects.RectangleToTriangle(
+      Geom.Intersects.RectangleToTriangle(
         this.player.getBounds(),
         this.triangle
       )
     ) {
       if (up.isDown) {
-        this.jump();
+        this.player.body.setAllowGravity(true);
+        this.player.body.gravity.y = CONFIG_GRAVITY_Y;
+        this.player.body.setVelocityY(CONFIG_PLAYER_VEL_Y);
       } else {
-        const dX =
-          this.player.body.position.x + this.player.width - this.slope.x;
-
         this.player.body.position.y =
-          this.slope.y + this.slope.height - this.player.height - dX;
+          this.slope.y +
+          this.slope.height -
+          this.player.height -
+          (this.player.body.position.x + this.player.width - this.slope.x);
 
         this.player.body.setAllowGravity(false);
       }
@@ -175,7 +195,7 @@ class PlayScene extends Phaser.Scene {
     }
 
     if (
-      Phaser.Geom.Intersects.RectangleToTriangle(
+      Geom.Intersects.RectangleToTriangle(
         this.player.getBounds(),
         this.triangle
       )
@@ -189,4 +209,4 @@ class PlayScene extends Phaser.Scene {
   }
 }
 
-export default PlayScene;
+export default Play;
