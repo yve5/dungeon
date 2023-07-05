@@ -1,15 +1,10 @@
-import Phaser from 'phaser';
+import Phaser, { Physics } from 'phaser';
+import { ASSET_PLANK } from '../resources/constants';
 
-export default function createRotatingPlatform(scene, x, y, numTiles = 5) {
+const Platform = (scene, x, y, numTiles = 5) => {
   // A TileSprite is a Sprite whose texture repeats to fill the given width and height. We can use
   // this with an image from our tileset to create a platform composed of tiles:
-  const platform = scene.add.tileSprite(
-    x,
-    y,
-    64 * numTiles,
-    18,
-    'wooden-plank'
-  );
+  const platform = scene.add.tileSprite(x, y, 64 * numTiles, 18, ASSET_PLANK);
 
   scene.matter.add.gameObject(platform, {
     restitution: 0, // No bounciness
@@ -21,7 +16,7 @@ export default function createRotatingPlatform(scene, x, y, numTiles = 5) {
   });
 
   // Alias the native Matter.js API
-  const { Constraint } = Phaser.Physics.Matter.Matter;
+  const { Constraint } = Physics.Matter.Matter;
 
   // Create a point constraint that pins the center of the platform to a fixed point in space, so
   // it can't move
@@ -38,4 +33,6 @@ export default function createRotatingPlatform(scene, x, y, numTiles = 5) {
   const sign = Math.random() < 0.5 ? -1 : 1;
   const angle = sign * Phaser.Math.Between(15, 25);
   platform.setAngle(angle);
-}
+};
+
+export default Platform;
