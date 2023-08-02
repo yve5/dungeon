@@ -93,19 +93,19 @@ class Main extends Scene {
     // Smoothly follow the player
     inCamera.startFollow(this.player.sprite, false, 0.5, 0.5);
 
-    inWorld.on('collisionactive', ({ pairs }) => {
-      if (
-        pairs?.find(
-          ({ gameObjectA, gameObjectB }) =>
-            gameObjectA?.properties?.isLethal &&
-            gameObjectB?.texture?.key === ASSET_PLAYER
-        )
-      ) {
-        this.player.freeze();
-        inCamera.fade(250, 0, 0, 0);
-        inCamera.once('camerafadeoutcomplete', () => this.scene.restart());
-      }
-    });
+    // inWorld.on('collisionactive', ({ pairs }) => {
+    //   if (
+    //     pairs?.find(
+    //       ({ gameObjectA, gameObjectB }) =>
+    //         gameObjectA?.properties?.isLethal &&
+    //         gameObjectB?.texture?.key === ASSET_PLAYER
+    //     )
+    //   ) {
+    //     this.player.freeze();
+    //     inCamera.fade(250, 0, 0, 0);
+    //     inCamera.once('camerafadeoutcomplete', () => this.scene.restart());
+    //   }
+    // });
 
     // Load up some crates from the "Crates" object layer created in Tiled
     inMap

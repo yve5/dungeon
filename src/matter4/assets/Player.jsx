@@ -32,20 +32,63 @@ export default class Player {
       repeat: -1,
     });
 
+    this.isTouching = {
+      left: false,
+      right: false,
+      ground: false,
+    };
+
     // Create the physics-based sprite that we will move around and animate
     this.sprite = scene.matter.add.sprite(0, 0, ASSET_PLAYER, 0);
 
-    this.sprite.setScale(2).setFixedRotation().setPosition(x, y);
+    const { Body, Bodies } = Physics.Matter.Matter;
+    const { width: www, height: hhh } = this.sprite;
 
-    const { LEFT, RIGHT, A, D } = Input.Keyboard.KeyCodes;
+    const mainBody = Bodies.rectangle(0, 0, www * 0.6, hhh, {
+      chamfer: { radius: 10 },
+      label: 'HelloWorld',
+    });
+
+    const compoundBody = Body.create({
+      parts: [mainBody],
+      frictionStatic: 0,
+      frictionAir: 0.02,
+      friction: 0.1,
+      // render: {
+      //   sprite: { xOffset: 0.5, yOffset: 0.5 },
+      // },
+    });
+
+    this.sprite
+      .setExistingBody(compoundBody)
+      .setScale(2)
+      .setFixedRotation()
+      .setPosition(x, y);
+
+    const { LEFT, RIGHT, A, D, UP, W } = Input.Keyboard.KeyCodes;
     this.leftInput = new MultiKey(scene, [LEFT, A]);
     this.rightInput = new MultiKey(scene, [RIGHT, D]);
+    this.jumpInput = new MultiKey(scene, [UP, W]);
 
     this.scene.events.on('update', this.update, this);
+
+    scene.matter.world.on('collisionstart', (event, bodyA, bodyB) => {
+      if (bodyB.label === 'HelloWorld') {
+        this.isTouching.ground = true;
+      }
+    });
+
+    scene.matter.world.on('collisionend', (event, bodyA, bodyB) => {
+      if (bodyB.label === 'HelloWorld') {
+        this.isTouching.ground = false;
+      }
+    });
   }
 
   update() {
-    const moveForce = 0.02;
+    const isJumpKeyDown = this.jumpInput.isDown();
+    const isOnGround = this.isTouching.ground;
+    const moveForce = isOnGround ? 0.01 : 0.005;
 
     if (this.leftInput.isDown()) {
       this.sprite.setFlipX(true);
@@ -59,6 +102,10 @@ export default class Player {
       this.sprite.setVelocityX(7);
     } else if (this.sprite.body.velocity.x < -7) {
       this.sprite.setVelocityX(-7);
+    }
+
+    if (isJumpKeyDown) {
+      this.sprite.setVelocityY(-11);
     }
   }
 }

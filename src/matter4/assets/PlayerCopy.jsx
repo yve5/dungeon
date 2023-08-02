@@ -207,8 +207,6 @@ export default class Player {
       return;
     }
 
-    console.log(this.isTouching.ground);
-
     const isRightKeyDown = this.rightInput.isDown();
     const isLeftKeyDown = this.leftInput.isDown();
     const isJumpKeyDown = this.jumpInput.isDown();
